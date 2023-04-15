@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:moodie/screens/description_screen.dart';
 import 'package:moodie/screens/profile.dart';
-import 'package:tmdb_api/tmdb_api.dart';
+import '../models/api_services.dart';
 import '../services/authService.dart';
 import 'authentication/wrapper.dart';
 
 class Homepage extends StatefulWidget {
-  Homepage({super.key});
+  const Homepage({super.key});
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -14,37 +14,18 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   final AuthService _auth = AuthService();
-
-  // API Key
-  String apiKey = '652e669e27d3194e4697e41bfbf91c64';
-
-  // Access Token
-  String readAccessToken =
-      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NTJlNjY5ZTI3ZDMxOTRlNDY5N2U0MWJmYmY5MWM2NCIsInN1YiI6IjY0MmI5Yzk4YTNlNGJhMzI0OGQ4N2U2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QWVaw5MEsD6NYk50SB6u0GT-PQrQoGvNOIDnCiY9Y6g';
-
+  final APIService _apiService = APIService();
   List trendingMovies = [];
-
-  List topratedMovies = [];
-
-  loadMovies() async {
-    TMDB tmdbWithCustomLogs = TMDB(
-      ApiKeys(apiKey, readAccessToken),
-      logConfig: const ConfigLogger(
-        showLogs: true,
-        showErrorLogs: true,
-      ),
-    );
-    Map trendingResult = await tmdbWithCustomLogs.v3.trending.getTrending();
-    setState(() {
-      trendingMovies = trendingResult['results'];
-    });
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadMovies();
+    _apiService.getTrendingMovies().then((movies) {
+      setState(() {
+        trendingMovies = movies;
+      });
+    });
   }
 
   @override
@@ -213,8 +194,8 @@ class _HomepageState extends State<Homepage> {
                                 description: trendingMovies[index]['overview'],
                                 vote: trendingMovies[index]['vote_average']
                                     .toString(),
-                                launch_on: trendingMovies[index]
-                                    ['release_date'].toString(),
+                                launch_on: trendingMovies[index]['release_date']
+                                    .toString(),
                               ),
                             ),
                           ),

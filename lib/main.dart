@@ -21,8 +21,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Moodie',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
+          scaffoldBackgroundColor: const Color.fromRGBO(112, 29, 83, 1),
+          primarySwatch: Colors.deepPurple,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color.fromRGBO(112, 29, 83, 1),
+          )),
       home: Homepage(),
     );
   }

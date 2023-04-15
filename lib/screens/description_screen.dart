@@ -15,10 +15,8 @@ class DescriptionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(112, 29, 83, 1),
       appBar: AppBar(
         title: name != null ? Text(name) : const Text('Not Loaded'),
-        backgroundColor: const Color.fromRGBO(112, 29, 83, 1),
       ),
       body: ListView(children: [
         Container(
