@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             backgroundColor: Color.fromRGBO(112, 29, 83, 1),
           )),
-      home: Homepage(),
+      home: const Homepage(),
     );
   }
 }
